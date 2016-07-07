@@ -2,7 +2,7 @@ from time import sleep
 from slackclient import SlackClient
 import os
 from datetime import datetime
-from library import Library
+from library import *
 from pytz import timezone
 import atexit
 from tinys3 import Connection
