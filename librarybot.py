@@ -11,9 +11,6 @@ NAME = 'library_bot'
 
 posted = False
 
-lib = Library()
-channels = {} #Mapping from channel_id to user_id
-
 @atexit.register
 def save_library():
   print('Writing library.')
@@ -35,8 +32,21 @@ Anything else and I'll show you this message to help you out!
 If you have any facts you want to add, comments, complaints, or bug reports, message Jack Reichelt.
 """
 
-token = os.environ.get('TOKEN', None) # found at https://api.slack.com/web#authentication
-sc = SlackClient(token)
+TOKEN = os.environ.get('TOKEN', None) # found at https://api.slack.com/web#authentication
+S3_ACCESS_KEY = os.environ.get('S3_ACCESS_KEY', None)
+S3_SECRET_KEY = os.environ.get('S3_SECRET_KEY', None)
+
+conn = Connection(S3_ACCESS_KEY, S3_SECRET_KEY, endpoint='s3-ap-southeast-2.amazonaws.com')
+
+saved_subs = conn.get('borrowers.txt', 'iit-library')
+
+f = open('borrowers.txt', 'wb')
+f.write(saved_subs.content)
+f.close()
+
+lib = Library()
+
+sc = SlackClient(TOKEN)
 if sc.rtm_connect() == True:
   print('Connected.')
 

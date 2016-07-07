@@ -52,7 +52,7 @@ class Library(object):
 
     for user_id, user in self.users.items():
       if user.count() > 0:
-        f.write('{}:{}'.format(user_id, user.write()))
+        f.write('{}:{}'.format(user_id, user.write_user()))
 
 class User(object):
 
@@ -90,7 +90,7 @@ class User(object):
   def count(self):
     return len(self.borrowed_books)
 
-  def write(self):
+  def write_user(self):
     out = '{}'.format(self.name)
 
     for book, date in self.borrowed_books.items():
