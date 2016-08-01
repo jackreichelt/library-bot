@@ -14,8 +14,8 @@ class Library(object):
       users[user_details[0]] = User(user_details[1])
 
       for book in chunks[1:]:
-        book = book.split(':')
-        self.borrow_book(user_details[0], user_details[1], book[0], book[1])
+        title,date = book.rsplit(':',1)
+        self.borrow_book(user_details[0], user_details[1], title, date)
 
   def borrow_book(self, user_id, user_name, book, date = None):
     if user_id not in self.users:
